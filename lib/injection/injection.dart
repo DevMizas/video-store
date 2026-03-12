@@ -31,9 +31,9 @@ void setupInjection() {
   // ViewModels
   getIt.registerLazySingleton<FeedViewModel>(
     () => FeedViewModel(
-      getIt<GetVideosUseCase>(),
-      getIt<AddVideoUseCase>(),
-      getIt<ToggleFavoriteUseCase>(),
+      getVideos: getIt<GetVideosUseCase>(),
+      addVideo: getIt<AddVideoUseCase>(),
+      toggleFavorite: getIt<ToggleFavoriteUseCase>(),
     ),
   );
 

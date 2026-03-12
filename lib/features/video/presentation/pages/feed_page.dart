@@ -3,14 +3,14 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:video_store/features/features.dart';
 
-class FeedScreen extends StatefulWidget {
-  const FeedScreen({super.key});
+class FeedPage extends StatefulWidget {
+  const FeedPage({super.key});
 
   @override
-  State<FeedScreen> createState() => _FeedScreenState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedScreenState extends State<FeedScreen> {
+class _FeedPageState extends State<FeedPage> {
   final vm = GetIt.I<FeedViewModel>();
 
   @override
@@ -25,18 +25,9 @@ class _FeedScreenState extends State<FeedScreen> {
       value: vm,
       child: Consumer<FeedViewModel>(
         builder: (context, viewModel, child) {
-          if (viewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (viewModel.videos.isEmpty) {
-            return const Center(
-              child: Text(
-                'Nenhum vídeo ainda\nToque em + para adicionar',
-                textAlign: TextAlign.center,
-              ),
-            );
-          }
+          if (vm.isLoading) return const Center(child: CircularProgressIndicator());
+          if (vm.hasError) return Center(child: Text(vm.errorMessage ?? 'Erro desconhecido'));
+          if (vm.videos.isEmpty) return const Center(child: Text('Nenhum vídeo ainda'));
 
           return PageView.builder(
             scrollDirection: Axis.vertical,

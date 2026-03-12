@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:video_store/features/features.dart';
 
-class BottomNavScreen extends StatefulWidget {
-  const BottomNavScreen({super.key});
+class BottomNavPage extends StatefulWidget {
+  const BottomNavPage({super.key});
 
   @override
-  State<BottomNavScreen> createState() => _BottomNavScreenState();
+  State<BottomNavPage> createState() => _BottomNavPageState();
 }
 
-class _BottomNavScreenState extends State<BottomNavScreen> {
+class _BottomNavPageState extends State<BottomNavPage> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const FeedScreen(),
-    const GridScreen(),
-    const FavoritesScreen(),
-    const AddScreen(),
+    const FeedPage(),
+    const GridPage(),
+    const FavoritesPage(),
+    const AddPage(),
   ];
 
   @override

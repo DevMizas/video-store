@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:io';
-
-import 'package:video_store/features/features.dart';
+import '../../domain/entities/video_entity.dart';
+import '../viewmodels/feed_viewmodel.dart';
 
 class VideoTile extends StatefulWidget {
   final VideoEntity video;
   final bool autoPlay;
 
-  const VideoTile({super.key, required this.video, this.autoPlay = true});
+  const VideoTile({
+    super.key,
+    required this.video,
+    this.autoPlay = true,
+  });
 
   @override
   State<VideoTile> createState() => _VideoTileState();
@@ -56,49 +61,76 @@ class _VideoTileState extends State<VideoTile> {
     if (!_isInitialized) {
       return Container(
         color: Colors.black,
-        child: const Center(
-          child: CircularProgressIndicator(color: Colors.white),
-        ),
+        child: const Center(child: CircularProgressIndicator(color: Colors.white)),
       );
     }
 
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _isPlaying = !_isPlaying;
-          _isPlaying ? _controller.play() : _controller.pause();
-        });
-      },
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            color: Colors.black,
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: SizedBox(
-                    width: _controller.value.size.width,
-                    height: _controller.value.size.height,
-                    child: VideoPlayer(_controller),
+    return Consumer<FeedViewModel>(
+      builder: (context, viewModel, child) {
+        final currentVideo = viewModel.videos.firstWhere(
+          (v) => v.id == widget.video.id,
+          orElse: () => widget.video,
+        );
+
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              color: Colors.black,
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: SizedBox(
+                      width: _controller.value.size.width,
+                      height: _controller.value.size.height,
+                      child: VideoPlayer(_controller),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-
-          if (!_isPlaying)
-            const Center(
-              child: Icon(
-                Icons.play_circle_fill,
-                size: 80,
-                color: Colors.white70,
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isPlaying = !_isPlaying;
+                  _isPlaying ? _controller.play() : _controller.pause();
+                });
+              },
+              child: _isPlaying
+                  ? null
+                  : const Center(
+                      child: Icon(
+                        Icons.play_circle_fill,
+                        size: 80,
+                        color: Colors.white70,
+                      ),
+                    ),
+            ),
+            Positioned(
+              top: 40,
+              right: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    currentVideo.isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: currentVideo.isFavorite ? Colors.red : Colors.white,
+                    size: 32,
+                  ),
+                  onPressed: () {
+                    viewModel.toggleFavorite(widget.video.id);
+                  },
+                ),
               ),
             ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }

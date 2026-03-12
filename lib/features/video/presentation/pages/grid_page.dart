@@ -2,17 +2,18 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:video_store/core/core.dart';
 import 'package:video_store/features/features.dart';
 
-class GridScreen extends StatefulWidget {
-  const GridScreen({super.key});
+class GridPage extends StatefulWidget {
+  const GridPage({super.key});
 
   @override
-  State<GridScreen> createState() => _GridScreenState();
+  State<GridPage> createState() => _GridPageState();
 }
 
-class _GridScreenState extends State<GridScreen> {
+class _GridPageState extends State<GridPage> {
   final vm = GetIt.I<GridViewModel>();
 
   @override
@@ -61,30 +62,33 @@ class _GridScreenState extends State<GridScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => Scaffold(
-                        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-                        body: Stack(
-                          children: [
-                            VideoTile(video: video),
-                            Positioned(
-                              top: 40,
-                              left: 16,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(0, 0, 0, 0.5),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.white,
-                                    size: 32,
+                      builder: (_) => ChangeNotifierProvider<FeedViewModel>.value(
+                        value: GetIt.I<FeedViewModel>(),
+                        child: Scaffold(
+                          backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+                          body: Stack(
+                            children: [
+                              VideoTile(video: video),
+                              Positioned(
+                                top: 40,
+                                left: 16,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(0, 0, 0, 0.5),
+                                    shape: BoxShape.circle,
                                   ),
-                                  onPressed: () => Navigator.pop(context),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

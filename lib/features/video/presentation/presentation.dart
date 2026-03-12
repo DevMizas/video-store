@@ -1,8 +1,8 @@
-export './screens/add_screen.dart';
-export './screens/bottom_nav_screen.dart';
-export './screens/favorites_screen.dart';
-export './screens/feed_screen.dart';
-export './screens/grid_screen.dart';
+export 'pages/add_page.dart';
+export 'pages/bottom_nav_page.dart';
+export 'pages/favorites_page.dart';
+export 'pages/feed_page.dart';
+export 'pages/grid_page.dart';
 export './viewmodels/favorites_viewmodel.dart';
 export './viewmodels/feed_viewmodel.dart';
 export './viewmodels/grid_viewmodel.dart';

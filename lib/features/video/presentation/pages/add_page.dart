@@ -6,14 +6,14 @@ import 'package:get_it/get_it.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_store/features/features.dart';
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+class AddPage extends StatefulWidget {
+  const AddPage({super.key});
 
   @override
-  State<AddScreen> createState() => _AddScreenState();
+  State<AddPage> createState() => _AddPageState();
 }
 
-class _AddScreenState extends State<AddScreen> {
+class _AddPageState extends State<AddPage> {
   final _addVideoUseCase = GetIt.I<AddVideoUseCase>();
   bool _isUploading = false;
   bool _hasPermission = false;
@@ -25,38 +25,38 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Future<void> _checkAndRequestPermission() async {
-  Permission permissionToRequest;
+    Permission permissionToRequest;
 
-  if (Platform.isAndroid) {
-    permissionToRequest = Permission.videos;
-  } else {
-    permissionToRequest = Permission.photos;
-  }
+    if (Platform.isAndroid) {
+      permissionToRequest = Permission.videos;
+    } else {
+      permissionToRequest = Permission.photos;
+    }
 
-  var status = await permissionToRequest.status;
+    var status = await permissionToRequest.status;
 
-  if (!status.isGranted) {
-    status = await permissionToRequest.request();
+    if (!status.isGranted) {
+      status = await permissionToRequest.request();
 
-    if (status.isPermanentlyDenied) {
-      await openAppSettings();
-      status = await permissionToRequest.status;
+      if (status.isPermanentlyDenied) {
+        await openAppSettings();
+        status = await permissionToRequest.status;
+      }
+    }
+
+    setState(() {
+      _hasPermission = status.isGranted || status.isLimited;
+    });
+
+    if (!_hasPermission && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Permissão necessária. Vá em Configurações > Apps > Seu App > Permissões e ative "Vídeos e fotos".'),
+          duration: Duration(seconds: 5),
+        ),
+      );
     }
   }
-
-  setState(() {
-    _hasPermission = status.isGranted || status.isLimited;
-  });
-
-  if (!_hasPermission && mounted) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Permissão necessária. Vá em Configurações > Apps > Seu App > Permissões e ative "Vídeos e fotos".'),
-        duration: Duration(seconds: 5),
-      ),
-    );
-  }
-}
 
   Future<void> _pickAndAddVideos() async {
     await _checkAndRequestPermission();

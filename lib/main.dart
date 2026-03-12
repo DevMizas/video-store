@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Video Store',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
-      home: const BottomNavScreen(),
+      home: const BottomNavPage(),
     );
   }
 }

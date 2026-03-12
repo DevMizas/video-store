@@ -8,7 +8,7 @@ O usuário pode adicionar vídeos diretamente do dispositivo e navegar por eles 
 
 ## 🎬 Demo
 
-<img src="screenshots/demo.gif" width="300"/>
+<img src="assets/demo.gif" width="300"/>
 
 ---
 

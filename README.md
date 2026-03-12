@@ -1,17 +1,49 @@
-# video_store
+# 📱 Video Store
 
-A new Flutter project.
+**Video Store** é um aplicativo Flutter inspirado no formato de feed vertical popularizado por redes sociais como TikTok, mas com uma proposta diferente: todo o conteúdo é **local e privado**.
 
-## Getting Started
+O usuário pode adicionar vídeos diretamente do dispositivo e navegar por eles em um **feed vertical fluido**, explorar conteúdos em **grid** e salvar vídeos favoritos — tudo funcionando **100% offline**.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🎬 Demo
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+<img src="screenshots/demo.gif" width="300"/>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🚀 Features
+
+- Feed vertical de vídeos estilo TikTok
+- Grid de exploração com thumbnails geradas dinamicamente
+- Sistema de favoritos
+- Reprodução automática de vídeos
+- Suporte a vídeos horizontais e verticais
+- Armazenamento local persistente
+- Gerenciamento de permissões para acesso à mídia
+- Funciona **100% offline**
+
+---
+
+## 🧠 Tecnologias Utilizadas
+
+- **Flutter**
+- **Dart**
+- **Clean Architecture**
+- **MVVM**
+- **GetIt (Dependency Injection)**
+
+### Principais pacotes utilizados
+
+- `video_player`
+- `video_thumbnail`
+- `shared_preferences`
+- `path_provider`
+- `file_picker`
+- `permission_handler`
+
+---
+
+## 🏗️ Arquitetura
+
+O projeto segue **Clean Architecture + MVVM**, garantindo separação clara entre responsabilidades e facilitando manutenção e escalabilidade.
